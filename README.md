@@ -1,11 +1,51 @@
-# Front
+# Aplicación de Facturación
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+Sistema web hecho en Angular v15.
 
-## Development server
+## Deployment
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+El proyecto se ejecuta con el siguiente comando:
 
-## Build
+```bash
+  ng s
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Posteriormente, navegue a la ruta http://localhost:4200/
+
+## Tech Stack
+
+**Client:** Angular v15
+
+**Server:** Spring Boot (2.4.3)
+
+## Routes
+
+#### Login
+
+```http
+  http://localhost:4200/login
+```
+
+#### Actualizar Tipo de Contribuyente
+
+```http
+  http://localhost:4200/app/tipo-contribuyente
+```
+
+#### Actualizar Tipo de Documento
+
+```http
+  http://localhost:4200/app/tipo-documento
+```
+
+#### Listar entidad
+
+```http
+  http://localhost:4200/app/entidad-list
+```
+
+#### Crear entidad
+
+```http
+  http://localhost:4200/app/entidad-create
+```
