@@ -24,7 +24,9 @@
       <ng-container *ngIf="column.type == 'text'" >
         <ng-container [matColumnDef]="column.property">
           <th mat-header-cell *matHeaderCellDef>{{column.label}}</th>
-          <td mat-cell *matCellDef="let element"> {{element[column.property] ?? '-'}} </td>
+          <td mat-cell *matCellDef="let element"> {{
+            assembleProperty(element, column.property) }}
+          </td>
         </ng-container>
       </ng-container>
 

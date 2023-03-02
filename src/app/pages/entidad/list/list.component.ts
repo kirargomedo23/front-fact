@@ -51,6 +51,14 @@ export class ListComponent  implements OnInit {
     return this.columns.map( data => data.property );
   }
 
+  assembleProperty(element: any,key:string){
+    if( element!=undefined  && key !=undefined ){
+      const arrayProperty = key.split('.');
+      if( arrayProperty.length == 1)return  element[key] ?? '-';
+      if(arrayProperty.length > 1) return element[arrayProperty[0]][arrayProperty[1]];
+    }
+  }
+
   navigateToPage(url:string){
     this.router.navigate([url]);
   }
