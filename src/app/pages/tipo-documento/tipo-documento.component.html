@@ -6,15 +6,13 @@
   <mat-card-content>
     <br><br>
     <form class="container-form" [formGroup]= "formTipoDocumento">
-      <div class="form-codigo">
+      <div class="form-row">
         <mat-form-field  >
           <mat-label> Código </mat-label>
           <input formControlName="codigo"  matInput  >
           <mat-error *ngIf="getFormTipoDocumentoControls('codigo')?.hasError('required')">El código es obligatorio</mat-error>
         </mat-form-field>
-      </div>
 
-      <div class="form-nombre">
         <mat-form-field  >
           <mat-label> Nombre </mat-label>
           <input formControlName="nombre"  matInput  >
@@ -22,16 +20,17 @@
         </mat-form-field>
       </div>
 
-      <div class="form-descripcion">
+      <div class="form-row">
         <mat-form-field  >
           <mat-label> Descripción</mat-label>
-          <input formControlName="descripcion"  matInput  >
-          <mat-error *ngIf="getFormTipoDocumentoControls('descripcion')?.hasError('required')">La descripción es obligatorio</mat-error>
+          <textarea matInput formControlName="descripcion" ></textarea>
+          <mat-error *ngIf="getFormTipoDocumentoControls('descripcion')?.hasError('required')">
+            La descripción es obligatorio
+          </mat-error>
         </mat-form-field>
-      </div>
 
-      <div class="form-slide">
-        <mat-slide-toggle  (change)="changeSlide($event)"
+        <mat-slide-toggle  style="display: flex; justify-content: center;"
+          (change)="changeSlide($event)"
           formControlName="estado" >{{titleSlideToggle}}</mat-slide-toggle>
       </div>
     </form>

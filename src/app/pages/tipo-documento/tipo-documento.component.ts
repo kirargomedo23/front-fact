@@ -17,8 +17,12 @@ export class TipoDocumentoComponent implements OnInit {
 
   public title: String = 'Actualizar Tipo de Documento';
   public titleSlideToggle: string = 'Activo';
+  public idTipoDocumento: number  = 0;
 
-  formTipoDocumento: FormGroup;
+
+  public loading: boolean = true;
+
+  formTipoDocumento: FormGroup = this.formBuilder.group({});
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -28,18 +32,27 @@ export class TipoDocumentoComponent implements OnInit {
     private readonly utilService: UtilService,
     private readonly tipoDocumentoService: TipoDocumentoService
   ){
+    this.formCreateTipoDocumento();
+  }
+
+  ngOnInit(): void {
+    this.idTipoDocumento = Number(this.activatedRoute.snapshot.paramMap.get("id"));
+
+    if( isNaN(this.idTipoDocumento )){
+      this.router.navigate(['app/entidad-list']);
+    }
+
+    this.getDocumento();
+  }
+
+
+  formCreateTipoDocumento(){
     this.formTipoDocumento = this.formBuilder.group({
       codigo:[null, [Validators.required]],
       nombre:[null, [Validators.required]],
       descripcion:[null],
       estado:[null, [Validators.required]]
     });
-  }
-
-  ngOnInit(): void {
-    const id  = this.activatedRoute.snapshot.paramMap.get("id");
-
-    this.getDocumento();
   }
 
   get getValueFormTipoDocumento(){
@@ -51,15 +64,33 @@ export class TipoDocumentoComponent implements OnInit {
   }
 
   getDocumento(){
-
+    this.tipoDocumentoService.getOneById(this.idTipoDocumento)
+    .subscribe({
+      next: (data:TipoDocumento)  => {
+        this.updateValueForm(data);
+        this.loading = false;
+      },
+      error: ()  => {
+        this.loading = false;
+        this.utilService.openMessageError( 'Ocurrió un error al obtener el documento');
+      }
+    });
   }
 
   updateValueForm(data: TipoDocumento){
     this.getFormTipoDocumentoControls('nombre')?.setValue(data.nombre);
+    this.getFormTipoDocumentoControls('codigo')?.setValue(data.codigo);
+    this.getFormTipoDocumentoControls('descripcion')?.setValue(data.descripcion);
     this.getFormTipoDocumentoControls('estado')?.setValue(data.estado);
   }
 
   openModal(){
+
+    const isInvalidForm = this.formTipoDocumento.invalid;
+
+    if( isInvalidForm ){
+      return this.utilService.openMessageError('Formulario inválido. Por favor, corrija los erróneos');
+    }
 
     this.matDialog.open(ModalConfirmationComponent, {
       disableClose: false,
@@ -74,13 +105,24 @@ export class TipoDocumentoComponent implements OnInit {
   }
 
   update(){
-    console.log("metodo update");
+    const value = this.formTipoDocumento.value;
+    this.tipoDocumentoService.updateById(this.idTipoDocumento, value)
+    .subscribe({
+      next: ()  => {
+        this.utilService.openMessageSucces( 'Se ha actualizado de manera correcta');
+        this.loading = false;
+        this.getDocumento();
+      },
+      error: ()  => {
+        this.loading = false;
+        this.utilService.openMessageError( 'Ocurrió un error al obtener el documento');
+      }
+    });
 
   }
 
   changeSlide(event:MatSlideToggleChange){
     this.titleSlideToggle = (event.checked) ? 'Activo': 'Inactivo';
-
   }
 
 }
