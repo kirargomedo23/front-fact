@@ -11,13 +11,19 @@ import { ModalConfirmationModule } from '@app/shared/components/modal-confirmati
 import { FormsAngularMaterialModule } from '@app/shared/modules/forms-angular-material.module';
 
 
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSelectModule} from '@angular/material/select';
+
+
+
 @NgModule({
   declarations: [
     ListComponent
   ],
   imports: [
     CommonModule,  ListRoutingModule,
-    FormsAngularMaterialModule, ModalConfirmationModule
+    FormsAngularMaterialModule, ModalConfirmationModule,
+    MatMenuModule, MatSelectModule
   ],
   providers:[UtilService]
 })
