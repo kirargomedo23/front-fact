@@ -1,1 +1,44 @@
-<p>tipo-documento works!</p>
+
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title>Actualizar Tipo de Documento</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <br><br>
+    <form class="container-form" [formGroup]= "formTipoDocumento">
+      <div class="form-codigo">
+        <mat-form-field  >
+          <mat-label> Código </mat-label>
+          <input formControlName="codigo"  matInput  >
+          <mat-error *ngIf="getFormTipoDocumentoControls('codigo')?.hasError('required')">El código es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-nombre">
+        <mat-form-field  >
+          <mat-label> Nombre </mat-label>
+          <input formControlName="nombre"  matInput  >
+          <mat-error *ngIf="getFormTipoDocumentoControls('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-descripcion">
+        <mat-form-field  >
+          <mat-label> Descripción</mat-label>
+          <input formControlName="descripcion"  matInput  >
+          <mat-error *ngIf="getFormTipoDocumentoControls('descripcion')?.hasError('required')">La descripción es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-slide">
+        <mat-slide-toggle  (change)="changeSlide($event)"
+          formControlName="estado" >{{titleSlideToggle}}</mat-slide-toggle>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button (click)="openModal()"
+    mat-raised-button
+    color="primary">Actualizar</button>
+  </mat-card-actions>
+</mat-card>
