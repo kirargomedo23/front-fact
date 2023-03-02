@@ -6,23 +6,21 @@
   <mat-card-content>
     <br><br>
     <form class="container-form" [formGroup]= "formTipoContribuyente">
-      <div class="form-nombre">
-        <mat-form-field  >
-          <mat-label> Nombre </mat-label>
-          <input formControlName="nombre"  matInput  >
-          <mat-error *ngIf="getFormTipoContribuyenteControls('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
-        </mat-form-field>
-      </div>
+      <mat-form-field  >
+        <mat-label> Nombre </mat-label>
+        <input
+          formControlName="nombre"  matInput  >
+        <mat-error *ngIf="getFormTipoContribuyenteControls('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
+      </mat-form-field>
 
-      <div class="form-slide">
-        <mat-slide-toggle  (change)="changeSlide($event)"
+      <mat-slide-toggle style="display: flex; justify-content: center;"
+          (change)="changeSlide($event)"
           formControlName="estado" >{{titleSlideToggle}}</mat-slide-toggle>
-      </div>
     </form>
   </mat-card-content>
   <mat-card-actions align="end">
     <button (click)="openModal()"
-    mat-raised-button
+    mat-raised-button [disabled]="loading"
     color="primary">Actualizar</button>
   </mat-card-actions>
 </mat-card>

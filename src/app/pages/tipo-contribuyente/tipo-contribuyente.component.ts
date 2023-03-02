@@ -22,6 +22,9 @@ export class TipoContribuyenteComponent implements OnInit {
   formTipoContribuyente: FormGroup;
 
   public titleSlideToggle: string = 'Activo';
+  public idTipoContribuyente: number  = 0;
+
+  public loading: boolean = true;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -38,7 +41,11 @@ export class TipoContribuyenteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id  = this.activatedRoute.snapshot.paramMap.get("id");
+    this.idTipoContribuyente = Number(this.activatedRoute.snapshot.paramMap.get("id")) ;
+
+    if( isNaN(this.idTipoContribuyente )){
+      this.router.navigate(['app/entidad-list']);
+    }
 
     this.getContribuyente();
   }
@@ -52,11 +59,18 @@ export class TipoContribuyenteComponent implements OnInit {
   }
 
   getContribuyente(){
-    this.tipoContribuyenteService.getOneById(1).subscribe( (data:any)=> {
-      console.log("data: ", data);
-    }, error => {
-        this.utilService.openMessageError( 'Ocurrió un error al obtener el contribuyente');
-    } );
+    this.tipoContribuyenteService
+      .getOneById(this.idTipoContribuyente)
+      .subscribe({
+        next: (data:TipoContribuyente)  => {
+          this.updateValueForm(data);
+          this.loading = false;
+        },
+        error: ()  => {
+          this.loading = false;
+          this.utilService.openMessageError( 'Ocurrió un error al obtener el contribuyente');
+        }
+      } );
   }
 
   updateValueForm(data: TipoContribuyente){
@@ -65,6 +79,10 @@ export class TipoContribuyenteComponent implements OnInit {
   }
 
   openModal(){
+
+    if(this.formTipoContribuyente.invalid){
+      return this.utilService.openMessageError('Formulario inválido. Por favor, corrija los erróneos');
+    }
 
     this.matDialog.open(ModalConfirmationComponent, {
       disableClose: false,
@@ -79,13 +97,28 @@ export class TipoContribuyenteComponent implements OnInit {
   }
 
   update(){
-    console.log("metodo update");
+
+    const data = this.formTipoContribuyente.value;
+    this.loading = true;
+
+    this.tipoContribuyenteService
+      .updateById(this.idTipoContribuyente, data )
+      .subscribe({
+        next: ()  => {
+          this.loading = false;
+          this.getContribuyente();
+          this.utilService.openMessageSucces('Se ha actualizado correctamente');
+        },
+        error: ()  => {
+          this.loading = false;
+          this.utilService.openMessageError( 'Ocurrió un error al obtener el contribuyente');
+        }
+      });
 
   }
 
   changeSlide(event:MatSlideToggleChange){
     this.titleSlideToggle = (event.checked) ? 'Activo': 'Inactivo';
-
   }
 
 }
