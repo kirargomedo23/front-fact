@@ -71,14 +71,14 @@ export class ListComponent  implements OnInit {
     });
   }
 
-  openModal(  ){
+  openModal( data:Entidad  ){
     this.matDialog.open(ModalConfirmationComponent, {
       disableClose: false,
       width: "400px",
     }).afterClosed()
     .subscribe(({answer}) => {
         if (answer === "yes") {
-          this.delete();
+          this.delete(data);
         }
     });
   }
@@ -88,8 +88,17 @@ export class ListComponent  implements OnInit {
     this.router.navigate([url]);
   }
 
-  delete(){
-
+  delete(data:any){
+    this.entidadService.delete(data.id_entidad)
+    .subscribe({
+      next: ( )  => {
+        this.utilService.openMessageSucces('Se ha eliminado de manera correcta');
+        this.getAll();
+       },
+      error: ()  => {
+        this.utilService.openMessageError('Ocurrió al eliminar la entidad');
+      }
+    });
   }
 
   filterForActive({value}:MatSelectChange){

@@ -1,19 +1,48 @@
 <div class="container">
+
+  <button class="btn-action "
+    (click)="navigateToPage('app/entidad-list')"
+    mat-raised-button
+    color="primary">Volver al listado</button>
+
+  <br><br><br>
+
   <mat-card class="container-entidad">
     <mat-card-header>
       <mat-card-title>Formulario de Entidad</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <form >
+    <br><br>
 
+    <mat-card-content>
+      <form  [formGroup]= "formEntidad"  >
+        <div class="form-row">
+          <mat-form-field  >
+            <mat-label> Documento </mat-label>
+            <input formControlName="nro_documento"  matInput  >
+            <mat-error *ngIf="getFormControl(formEntidad,'nro_documento')?.hasError('required')">
+              El documento es obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field  >
+            <mat-label> Razon Social </mat-label>
+            <input formControlName="razon_social"  matInput  >
+            <mat-error *ngIf="getFormControl(formEntidad,'razon_social')?.hasError('required')">
+              La razón social es obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>
+
+  <br><br><br><br>
 
   <mat-card class="container-entidad">
     <mat-card-header>
       <mat-card-title>Formulario de Tipo Contribuyente</mat-card-title>
     </mat-card-header>
+    <br><br>
     <mat-card-content>
       <form  [formGroup]= "formTipoContribuyente" >
         <div class="form-row">
@@ -22,7 +51,9 @@
             <input formControlName="nombre"  matInput  >
           </mat-form-field>
 
-          <mat-slide-toggle class="center"  (change)="changeSlide($event)"
+          <mat-slide-toggle
+          style="display: flex; justify-content: center;"
+          (change)="changeSlide($event)"
           formControlName="estado" >{{titleSlideToggle}}</mat-slide-toggle>
 
         </div>
@@ -30,20 +61,44 @@
     </mat-card-content>
   </mat-card>
 
+  <br><br><br><br>
+
   <mat-card class="container-entidad">
     <mat-card-header>
       <mat-card-title>Formulario de Tipo de Documento</mat-card-title>
     </mat-card-header>
+    <br><br>
     <mat-card-content>
-      <form >
+      <form  [formGroup]= "formTipoDocumento" >
+        <div class="form-row">
+          <mat-form-field  >
+            <mat-label> Código </mat-label>
+            <input formControlName="codigo"  matInput  >
+            <mat-error *ngIf="getFormControl(formTipoDocumento,'codigo')?.hasError('required')">
+              El código es obligatorio
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field  >
+            <mat-label> Nombre </mat-label>
+            <input formControlName="nombre"  matInput  >
+            <mat-error *ngIf="getFormControl(formTipoDocumento,'nombre')?.hasError('required')">
+              El nombre es obligatorio
+            </mat-error>
+          </mat-form-field>
+        </div>
 
       </form>
     </mat-card-content>
   </mat-card>
 
   <br><br>
-  <button class="btn-action "
+
+  <div class="btn-row">
+    <button class="btn-action "
+      [disabled]="loading"
     (click)="create()"
     mat-raised-button
     color="primary">Crear</button>
+  </div>
 </div>

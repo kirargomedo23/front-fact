@@ -17,6 +17,14 @@ export class EntidadService {
     return this.httpClient.get(`${this.url}/entidad/all`);
   }
 
+  public getById(id:number): Observable<any>{
+    return this.httpClient.get(`${this.url}/entidad/${id}`);
+  }
+
+  public search(search:string): Observable<any>{
+    return this.httpClient.get(`${this.url}/entidad/all/search?search=${search}`);
+  }
+
   public filter(value: boolean): Observable<any> {
     return this.httpClient.get(`${this.url}/entidad/all/filter?isActive=${value}`);
   }

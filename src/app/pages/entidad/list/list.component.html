@@ -33,7 +33,7 @@
           <th mat-header-cell *matHeaderCellDef>{{column.label}}</th>
           <td mat-cell *matCellDef="let element">
             <button mat-icon-button
-              [matMenuTriggerData]="{ data: element }"
+              [matMenuTriggerData]="{ dataEntidad: element }"
               [matMenuTriggerFor]="actionsMenu">
               <mat-icon>more_vert</mat-icon>
             </button>
@@ -47,12 +47,18 @@
     <tr mat-row *matRowDef="let row; columns: getColumns()"></tr>
   </table>
 
+  <div *ngIf="dataSource.data == null || dataSource.data.length == 0">
+    <p style="text-align: center">
+        No hay datos para mostrar.
+    </p>
+  </div>
+
 </div>
 
 
 
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
-  <ng-template let-Process="data" matMenuContent>
+  <ng-template let-dataEntidad="dataEntidad" matMenuContent>
     <button  (click)="update('app/tipo-documento/1')"
       mat-menu-item>
       <span>Editar Documento</span>
@@ -61,7 +67,7 @@
       mat-menu-item>
       <span>Editar Contribuyente</span>
     </button>
-    <button (click)="openModal( )"
+    <button (click)="openModal(dataEntidad)"
       mat-menu-item>
       <span>Eliminar</span>
     </button>

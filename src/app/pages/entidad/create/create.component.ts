@@ -17,7 +17,7 @@ export class CreateComponent implements OnInit {
   formTipoContribuyente: FormGroup = this.formBuilder.group({});
 
   public titleSlideToggle: string = 'Activo';
-
+  public loading: boolean = false;
 
   constructor(
     private readonly entidadService: EntidadService,
@@ -35,7 +35,7 @@ export class CreateComponent implements OnInit {
   }
 
   formCreateEntidad(){
-    this.formTipoContribuyente = this.formBuilder.group({
+    this.formEntidad = this.formBuilder.group({
       nro_documento: [null, [Validators.required]],
       razon_social: [null, [Validators.required]],
       nombre_comercial: [null ],
@@ -46,11 +46,11 @@ export class CreateComponent implements OnInit {
   }
 
   formCreateTipoDocumento(){
-    this.formTipoContribuyente = this.formBuilder.group({
+    this.formTipoDocumento = this.formBuilder.group({
       codigo: [null, [Validators.required]],
       nombre: [null, [Validators.required]],
       descripcion: [null],
-      estado: [null, [Validators.required] ],
+      estado: [null  ],
     });
   }
 
@@ -71,5 +71,71 @@ export class CreateComponent implements OnInit {
 
   create(){
 
+    const isValid = this.validaForm();
+
+    if(!isValid) return;
+
+    const dataEntidad = this.formEntidad.value;
+    const dataTipoContribuyente = this.formTipoContribuyente.value;
+    const dataTipoDocumento = this.formTipoDocumento.value;
+
+    const data = {
+      ...dataEntidad,
+      documento:{
+        ...dataTipoDocumento
+      },
+      contribuyente:{
+        ...dataTipoContribuyente
+      }
+    }
+    this.loading = true;
+    this.entidadService.create(data)
+    .subscribe({
+      next: ()  => {
+        this.loading = false;
+        this.utilService.openMessageSucces('Se ha guardado correctamente');
+        this.resetForm();
+      },
+      error: ()  => {
+        this.loading = false;
+        this.utilService.openMessageError( 'Ocurrió un error al obtener la lista de entidades');
+      }
+    });
+
+  }
+
+  validaForm(){
+    const isInvalidEntidad = this.formEntidad.invalid;
+
+    if(isInvalidEntidad){
+      this.utilService.openMessageError('Formulario de Entidad inválido. Por favor, corrija los errores');
+      return false;
+    }
+
+    const isInvalidTipoContribuyente = this.formTipoContribuyente.invalid;
+
+    if(isInvalidTipoContribuyente){
+      this.utilService.openMessageError('Formulario Tipo COntribuyente inválido. Por favor, corrija los errores');
+      return false;
+    }
+
+    const isInvalidTipoDocumento = this.formTipoDocumento.invalid;
+
+    if(isInvalidTipoDocumento){
+      this.utilService.openMessageError('Formulario Tipo de Documento inválido. Por favor, corrija los errores');
+      return false;
+    }
+
+    return true;
+  }
+
+  resetForm(){
+    this.formEntidad.reset();
+    this.formTipoDocumento.reset();
+    this.formTipoContribuyente.reset();
+  }
+
+  navigateToPage(url:string){
+    this.router.navigate([url]);
   }
 }
