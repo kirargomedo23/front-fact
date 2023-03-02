@@ -115,4 +115,24 @@ export class ListComponent  implements OnInit {
       }
     });
   }
+
+  search(value: string){
+
+    if( value == ''){
+      this.getAll();
+    }else{
+      this.entidadService
+      .search(value)
+      .subscribe({
+        next: (data:any)  => {
+          this.dataSource.data = data;
+        },
+        error: ()  => {
+          this.utilService.openMessageError( 'Ocurrió un error al obtener la lista de entidades filtradas');
+        }
+      });
+    }
+
+
+  }
 }

@@ -16,7 +16,7 @@
     </mat-form-field>
 
     <br><br>
-    <app-search />
+    <app-search  (eventEmitter)="search($event)" />
   </div>
 
   <table mat-table  [dataSource]="dataSource"  >
