@@ -17,16 +17,20 @@ export class EntidadService {
     return this.httpClient.get(`${this.url}/entidad/all`);
   }
 
-  public create() {
-
+  public filter(value: boolean): Observable<any> {
+    return this.httpClient.get(`${this.url}/entidad/all/filter?isActive=${value}`);
   }
 
-  public update(){
-
+  public create(data: any): Observable<any>  {
+    return this.httpClient.post(`${this.url}/entidad/`, data);
   }
 
-  public delete(){
+  public update(id: number, data: any): Observable<any> {
+    return this.httpClient.put(`${this.url}/entidad/${id}`, data);
+  }
 
+  public delete(id: number): Observable<any>{
+    return this.httpClient.delete(`${this.url}/entidad/${id}`);
   }
 
 

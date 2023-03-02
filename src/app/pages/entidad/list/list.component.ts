@@ -7,6 +7,7 @@ import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Entidad } from '@app/interfaces/entidad.interface';
 import { MatSelectChange } from '@angular/material/select';
+import { TableColumn } from '@app/interfaces/table-column.interface';
 
 
 
@@ -20,9 +21,16 @@ export class ListComponent  implements OnInit {
   public loading : boolean = true;
 
   dataSource: any = [];
-  displayedColumns: string[] = [  "nombre_comercial",
-  "nro_documento","razon_social","telefono",
-    "Acciones"];
+
+  columns: TableColumn<Entidad>[] = [
+    { label: 'Nombre Comercial' , property:'nombre_comercial', type:'text'},
+    { label: 'Nro. Documento' , property:'nro_documento', type:'text'},
+    { label: 'Razón Social' , property:'razon_social', type:'text'},
+    { label: 'Teléfono' , property:'telefono', type:'text'},
+    { label: 'Nombre del Contribuyente' , property:'contribuyente.nombre', type:'text'},
+    { label: 'Nombre del Documento' , property:'documento.nombre', type:'text'},
+    { label: 'Acciones' , property:'acciones', type:'button'}
+  ];
 
   constructor(
     private readonly matDialog: MatDialog,
@@ -37,6 +45,10 @@ export class ListComponent  implements OnInit {
     this.dataSource = new MatTableDataSource();
 
     this.getAll();
+  }
+
+  getColumns(){
+    return this.columns.map( data => data.property );
   }
 
   navigateToPage(url:string){
@@ -81,6 +93,17 @@ export class ListComponent  implements OnInit {
   }
 
   filterForActive({value}:MatSelectChange){
-    console.log("filter : ", value);
+    this.entidadService
+    .filter(value)
+    .subscribe({
+      next: (data:any)  => {
+        this.loading = false;
+        this.dataSource.data = data;
+      },
+      error: ()  => {
+        this.loading = false;
+        this.utilService.openMessageError( 'Ocurrió un error al obtener la lista de entidades filtradas');
+      }
+    });
   }
 }
