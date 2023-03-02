@@ -13,17 +13,19 @@ import { FormsAngularMaterialModule } from '@app/shared/modules/forms-angular-ma
 
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
-
+import {MatIconModule} from '@angular/material/icon';
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
   declarations: [
-    ListComponent
+    ListComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,  ListRoutingModule,
     FormsAngularMaterialModule, ModalConfirmationModule,
-    MatMenuModule, MatSelectModule
+    MatMenuModule, MatSelectModule, MatIconModule
   ],
   providers:[UtilService]
 })

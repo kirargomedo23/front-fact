@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { EntidadService } from '@app/services/entidad/entidad.service';
 import { UtilService } from '@app/services/util/util.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Entidad } from '@app/interfaces/entidad.interface';
+import { MatSelectChange } from '@angular/material/select';
+
+
 
 @Component({
   selector: 'app-list',
@@ -13,9 +17,11 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ListComponent  implements OnInit {
 
+  public loading : boolean = true;
 
-  dataSource: MatTableDataSource<any> | null = null;
-  displayedColumns: string[] = [  "nombre",
+  dataSource: any = [];
+  displayedColumns: string[] = [  "nombre_comercial",
+  "nro_documento","razon_social","telefono",
     "Acciones"];
 
   constructor(
@@ -30,35 +36,51 @@ export class ListComponent  implements OnInit {
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
 
-    this.getAllContribuyentes();
+    this.getAll();
   }
 
   navigateToPage(url:string){
     this.router.navigate([url]);
   }
 
-  getAllContribuyentes(){
+  getAll(){
+    this.loading = true;
 
+    this.entidadService.listAll()
+    .subscribe({
+      next: (data:any)  => {
+        this.loading = false;
+        this.dataSource.data = data;
+      },
+      error: ()  => {
+        this.loading = false;
+        this.utilService.openMessageError( 'Ocurrió un error al obtener la lista de entidades');
+      }
+    });
   }
 
-  openModal(){
+  openModal(  ){
     this.matDialog.open(ModalConfirmationComponent, {
       disableClose: false,
       width: "400px",
     }).afterClosed()
     .subscribe(({answer}) => {
         if (answer === "yes") {
-          this.update();
+          this.delete();
         }
     });
   }
 
 
-  update(){
-
+  update(url: string){
+    this.router.navigate([url]);
   }
 
   delete(){
 
+  }
+
+  filterForActive({value}:MatSelectChange){
+    console.log("filter : ", value);
   }
 }
