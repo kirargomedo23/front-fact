@@ -41,4 +41,8 @@ export class LoginComponent implements OnInit {
 
   }
 
+  navigateToPageEntidad(){
+    this.router.navigate(["app/entidad-list"]);
+  }
+
 }
