@@ -11,11 +11,11 @@ const routes: Routes = [
     loadChildren: () => import('@pages/entidad/list/list.module').then((m) => m.ListModule),
   },
   {
-    path: 'tipo-contribuyente',
+    path: 'tipo-contribuyente/:id',
     loadChildren: () => import('@pages/tipo-contribuyente/tipo-contribuyente.module').then((m) => m.TipoContribuyenteModule),
   },
   {
-    path: 'tipo-documento',
+    path: 'tipo-documento/:id',
     loadChildren: () => import('@pages/tipo-documento/tipo-documento.module').then((m) => m.TipoDocumentoModule),
   }
 ];

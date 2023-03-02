@@ -6,6 +6,7 @@ import { TipoDocumentoService } from '@app/services/tipo-documento/tipo-document
 import { UtilService } from '@app/services/util/util.service';
 import { ModalConfirmationComponent } from '@app/shared/components/modal-confirmation/modal-confirmation.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tipo-documento',
@@ -17,12 +18,11 @@ export class TipoDocumentoComponent implements OnInit {
   public title: String = 'Actualizar Tipo de Documento';
   public titleSlideToggle: string = 'Activo';
 
-
-
   formTipoDocumento: FormGroup;
 
-
   constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
     private readonly matDialog: MatDialog,
     private readonly formBuilder: FormBuilder,
     private readonly utilService: UtilService,
@@ -37,6 +37,8 @@ export class TipoDocumentoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const id  = this.activatedRoute.snapshot.paramMap.get("id");
+
     this.getDocumento();
   }
 

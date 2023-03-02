@@ -7,6 +7,7 @@ import { TipoContribuyenteService } from '@app/services/tipo-contribuyente/tipo-
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConfirmationComponent } from '@app/shared/components/modal-confirmation/modal-confirmation.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class TipoContribuyenteComponent implements OnInit {
   public titleSlideToggle: string = 'Activo';
 
   constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
     private readonly matDialog: MatDialog,
     private readonly utilService: UtilService,
     private readonly formBuilder: FormBuilder,
@@ -35,6 +38,8 @@ export class TipoContribuyenteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const id  = this.activatedRoute.snapshot.paramMap.get("id");
+
     this.getContribuyente();
   }
 
