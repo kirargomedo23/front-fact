@@ -1,0 +1,27 @@
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Actualizar Tipo de Contribuyente</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="container-form" [formGroup]= "formTipoContribuyente">
+      <div class="form-nombre">
+        <mat-form-field  >
+          <mat-label> Nombre </mat-label>
+          <input formControlName="nombre"  matInput  >
+          <mat-error *ngIf="getFormTipoContribuyenteControls('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-slide">
+        <mat-slide-toggle  (change)="changeSlide($event)"
+          formControlName="estado" >{{titleSlideToggle}}</mat-slide-toggle>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="openModal()"
+    mat-raised-button
+    color="primary">Actualizar</button>
+  </mat-card-actions>
+</mat-card>

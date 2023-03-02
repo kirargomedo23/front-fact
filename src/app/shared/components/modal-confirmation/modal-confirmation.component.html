@@ -1,0 +1,14 @@
+<div mat-dialog-title class="container">
+  <div class="title">Modal de Confirmación</div>
+  <button type="button"
+    mat-icon-button (click)="close('No answer')"
+    tabindex="-1" >
+  </button>
+</div>
+<mat-dialog-content>
+  <p>¿Estás seguro de querer realizar estos cambios?</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close('no')">No, cancelar!</button>
+  <button mat-button (click)="close('yes')">Sí</button>
+</mat-dialog-actions>
