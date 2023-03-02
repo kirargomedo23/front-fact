@@ -1,1 +1,49 @@
-<p>create works!</p>
+<div class="container">
+  <mat-card class="container-entidad">
+    <mat-card-header>
+      <mat-card-title>Formulario de Entidad</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form >
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="container-entidad">
+    <mat-card-header>
+      <mat-card-title>Formulario de Tipo Contribuyente</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form  [formGroup]= "formTipoContribuyente" >
+        <div class="form-row">
+          <mat-form-field  >
+            <mat-label> Nombre </mat-label>
+            <input formControlName="nombre"  matInput  >
+          </mat-form-field>
+
+          <mat-slide-toggle class="center"  (change)="changeSlide($event)"
+          formControlName="estado" >{{titleSlideToggle}}</mat-slide-toggle>
+
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="container-entidad">
+    <mat-card-header>
+      <mat-card-title>Formulario de Tipo de Documento</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form >
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <br><br>
+  <button class="btn-action "
+    (click)="create()"
+    mat-raised-button
+    color="primary">Crear</button>
+</div>
