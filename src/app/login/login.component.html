@@ -15,6 +15,7 @@
               type="password"
               matInput placeholder="Contraseña">
             <mat-error *ngIf="getFormLogin('contrasenia')?.hasError('required')">La contraseña es obligatorio</mat-error>
+            <mat-error *ngIf="getFormLogin('contrasenia')?.hasError('pattern')">Patrón no aceptable</mat-error>
           </mat-form-field>
         </form>
       </mat-card-content>

@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
   startFormLogin(){
     this.formLogin = this.formBuilder.group({
       usuario:[null, [Validators.required]],
-      contrasenia:[null, [Validators.required]],
+      contrasenia:[null, [Validators.required,
+         Validators.pattern(/^[a-z]*$/)]  ],
     });
   }
 
