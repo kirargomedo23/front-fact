@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthEventService } from '@services/events/auth/auth-event.service';
 import { LocalStorageService } from '@services/localStorage/local-storage.service';
 import { UtilService } from '@services/util/util.service';
 
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
     private readonly router: Router,
     private readonly utilService: UtilService,
     private readonly localStorageService: LocalStorageService,
+    private readonly authEventService: AuthEventService
   ){
     this.startFormLogin();
 
@@ -59,6 +61,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.authEventService.setCurrentLogin(true);
     this.navigateToPageEntidad();
 
   }
