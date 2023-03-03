@@ -1,3 +1,4 @@
+import { UtilService } from '@services/util/util.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -13,6 +14,7 @@ import { FormsAngularMaterialModule } from '@app/shared/modules/forms-angular-ma
   imports: [
     CommonModule, LoginRoutingModule,
     FormsAngularMaterialModule,
-  ]
+  ],
+  providers:[UtilService]
 })
 export class LoginModule { }
