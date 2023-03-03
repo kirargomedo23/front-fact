@@ -2,6 +2,12 @@
 
 Sistema web hecho en Angular v15.
 
+## Credentials Login
+
+**Usuario:** master
+
+**Contraseña:** master
+
 ## Deployment
 
 El proyecto se ejecuta con el siguiente comando:
