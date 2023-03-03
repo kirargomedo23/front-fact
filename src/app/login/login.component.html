@@ -11,7 +11,9 @@
             <mat-error *ngIf="getFormLogin('usuario')?.hasError('required')">El usuario es obligatorio</mat-error>
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <input  formControlName="contrasenia"  matInput placeholder="Contraseña">
+            <input  formControlName="contrasenia"
+              type="password"
+              matInput placeholder="Contraseña">
             <mat-error *ngIf="getFormLogin('contrasenia')?.hasError('required')">La contraseña es obligatorio</mat-error>
           </mat-form-field>
         </form>
